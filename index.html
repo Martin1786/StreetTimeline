@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Residence Timeline Viewer</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏠 Residence Timeline Viewer</h1>
+				<h3>Upload a CSV file to visualize residence timelines with color-coded categories</h3>
+            
+            <div class="instructions">
+                <h3>📋 CSV Format Required:</h3>
+                <p>Your CSV file must contain these exact columns:</p>
+                <p><code>house, resident_name, start_year, end_year, notes</code></p>
+                <p><strong>Notes:</strong> Include keywords like "owner", "tenant", "widow", "labourer", or "shopkeeper" for automatic color coding.</p>
+            </div>
+            
+            <div class="file-input-section">
+                <div class="file-input-wrapper">
+                    <input type="file" id="fileInput" accept=".csv" />
+                    <div class="file-input-button">
+                        📁 Choose CSV File
+                    </div>
+                </div>
+                <div id="status"></div>
+            </div>
+            
+            
+            <div id="legend"></div>
+        </header>
+        
+        <div id="timelineContainer"></div>
+    </div>
+
+    
+    <div id="tooltip"></div>
+
+    <!-- Load JavaScript modules in dependency order -->
+    <script src="tooltip.js"></script>
+    <script src="colorUtils.js"></script>
+    <script src="csvParser.js"></script>
+    <script src="timelineRenderer.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
