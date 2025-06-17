@@ -110,8 +110,17 @@ function initializeTimeline() {
 
       const pos = calculatePosition(entry.startYear, entry.endYear);
       bar.style.left = `${pos.left}%`;
-      bar.style.width = `${pos.width}%`;
+      bar.style.width = `${pos.width}%`; 
       bar.style.backgroundColor = getColorForNotes(entry.notes);
+      // Optional: Adjust font size based on bar width
+      const barWidth = pos.width;
+      if (barWidth < 15) {
+        label.style.fontSize = '0.7em';
+      } else if (barWidth < 25) {
+        label.style.fontSize = '0.8em';
+      } else {
+        label.style.fontSize = '0.9em';
+      }
 
       // Tooltip interactions
       bar.addEventListener('mouseenter', () => {
@@ -120,7 +129,8 @@ function initializeTimeline() {
       bar.addEventListener('mouseleave', hideTooltip);
 
       const label = document.createElement('span');
-      label.textContent = `${entry.name}`;
+      // ✨ UPDATED: Include date range in the format "Name (startYear - endYear)"
+      label.textContent = `${entry.name} (${entry.startYear} - ${entry.endYear})`;
       label.style.fontSize = '0.9em';
       label.style.fontWeight = '500';
       label.style.whiteSpace = 'nowrap';
