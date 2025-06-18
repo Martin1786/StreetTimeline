@@ -87,13 +87,13 @@ function initializeTimeline() {
     houseSection.style.position = 'relative'; // Make sure it's a positioning context
 
     // Display house label - only create once per house
-    const label = document.createElement('div');
-    label.classList.add('house-label');
-    label.textContent = house;
-    label.id = house.replace(/\s+/g, '').replace(/[^\w]/g, '');
-    label.style.position = 'relative';
-    label.style.zIndex = '1';
-    houseSection.appendChild(label);
+    const houseLabel = document.createElement('div');
+    houseLabel.classList.add('house-label');
+    houseLabel.textContent = house;
+    houseLabel.id = house.replace(/\s+/g, '').replace(/[^\w]/g, '');
+    houseLabel.style.position = 'relative';
+    houseLabel.style.zIndex = '1';
+    houseSection.appendChild(houseLabel);
 	
     // Add bar per resident
     residents.forEach(entry => {
@@ -110,17 +110,8 @@ function initializeTimeline() {
 
       const pos = calculatePosition(entry.startYear, entry.endYear);
       bar.style.left = `${pos.left}%`;
-      bar.style.width = `${pos.width}%`; 
+      bar.style.width = `${pos.width}%`;
       bar.style.backgroundColor = getColorForNotes(entry.notes);
-      // Optional: Adjust font size based on bar width
-      const barWidth = pos.width;
-      if (barWidth < 15) {
-        label.style.fontSize = '0.7em';
-      } else if (barWidth < 25) {
-        label.style.fontSize = '0.8em';
-      } else {
-        label.style.fontSize = '0.9em';
-      }
 
       // Tooltip interactions
       bar.addEventListener('mouseenter', () => {
@@ -128,24 +119,23 @@ function initializeTimeline() {
       });
       bar.addEventListener('mouseleave', hideTooltip);
 
-      const label = document.createElement('span');
-      // ✨ UPDATED: Include date range in the format "Name (startYear - endYear)"
-      label.textContent = `${entry.name} (${entry.startYear} - ${entry.endYear})`;
-      label.style.fontSize = '0.9em';
-      label.style.fontWeight = '500';
-      label.style.whiteSpace = 'nowrap';
-      label.style.overflow = 'hidden';
-      label.style.textOverflow = 'ellipsis';
-      label.style.color = '#fff';
-      label.style.textShadow = '0 1px 2px rgba(0,0,0,0.3)';
+      const nameLabel = document.createElement('span');
+      nameLabel.textContent = `${entry.name}`;
+      nameLabel.style.fontSize = '0.9em';
+      nameLabel.style.fontWeight = '500';
+      nameLabel.style.whiteSpace = 'nowrap';
+      nameLabel.style.overflow = 'hidden';
+      nameLabel.style.textOverflow = 'ellipsis';
+      nameLabel.style.color = '#fff';
+      nameLabel.style.textShadow = '0 1px 2px rgba(0,0,0,0.3)';
       
       // Adjust text color for lighter backgrounds
       if (bar.style.backgroundColor === '#FFE66D') {
-        label.style.color = '#333';
-        label.style.textShadow = 'none';
+        nameLabel.style.color = '#333';
+        nameLabel.style.textShadow = 'none';
       }
 
-      bar.appendChild(label);
+      bar.appendChild(nameLabel);
       row.appendChild(bar);
       houseSection.appendChild(row);
     });
