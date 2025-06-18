@@ -1,4 +1,4 @@
-// 📏 DRAW DECADE YEAR LABELS AT TOP yes
+// 📏 DRAW DECADE YEAR LABELS AT TOP 
 function renderYearScale(container) {
   const scale = document.createElement('div');
   scale.classList.add('year-scale');
@@ -15,12 +15,12 @@ function renderYearScale(container) {
 // 🗂️ DISPLAY COLOR LEGEND AT TOP OF PAGE
 function renderLegend() {
   const legendData = [
-    { text: 'Owner', color: '#69b3a2' },
-    { text: 'Tenant', color: '#5B9BD5' },
-    { text: 'Widow/Widower', color: '#FF6B6B' },
-    { text: 'Labourer', color: '#4ECDC4' },
-    { text: 'Shopkeeper / Grocer / Store', color: '#FFE66D' },
-    { text: 'Other / Default', color: '#69b3a2' }
+    { label: 'Owner', color: '#69b3a2' },
+    { label: 'Tenant', color: '#5B9BD5' },
+    { label: 'Widow/Widower', color: '#FF6B6B' },
+    { label: 'Labourer', color: '#4ECDC4' },
+    { label: 'Shopkeeper / Grocer / Store', color: '#FFE66D' },
+    { label: 'Other / Default', color: '#69b3a2' }
   ];
 
   const legend = document.getElementById('legend');
@@ -29,7 +29,7 @@ function renderLegend() {
   legendData.forEach(item => {
     const entry = document.createElement('div');
     entry.classList.add('legend-item');
-    entry.innerHTML = `<span class="legend-color" style="background-color: ${item.color}"></span>${item.text}`;
+    entry.innerHTML = `<span class="legend-color" style="background-color: ${item.color}"></span>${item.label}`;
     legend.appendChild(entry);
   });
 }
