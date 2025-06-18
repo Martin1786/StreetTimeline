@@ -1,4 +1,4 @@
-// 📏 DRAW DECADE YEAR LABELS AT TOP
+// 📏 DRAW DECADE YEAR LABELS AT TOP yes
 function renderYearScale(container) {
   const scale = document.createElement('div');
   scale.classList.add('year-scale');
