@@ -10,21 +10,14 @@
     <div class="container">
         <header>
             <h1>🏠 Buildings Timeline View</h1>
-				<h3>Upload a CSV file to visualize residence timelines with color-coded categories</h3>
+				<h3></h3>
             
-            <div class="instructions">
-                <h3>📋 CSV Format Required:</h3>
-                <p>Your CSV file must contain these exact columns:</p>
-                <p><code>house, resident_name, start_year, end_year, notes</code></p>
-                <p><strong>Notes:</strong> Include keywords like "owner", "tenant", "widow", "labourer", or "shopkeeper" for automatic color coding.</p>
-            </div>
+            
             
             <div class="file-input-section">
                 <div class="file-input-wrapper">
                     <input type="file" id="fileInput" accept=".csv" />
-                    <div class="file-input-button">
-                        📁 Choose CSV File
-                    </div>
+                    
                 </div>
                 <div id="status"></div>
             </div>
@@ -42,7 +35,7 @@
     <!-- Load JavaScript modules in dependency order -->
     <script src="tooltip.js"></script>
     <script src="colorUtils.js"></script>
-    <script src="csvParser.js"></script>
+    <!-- <script src="csvParser.js"></script> --->
     <script src="timelineRenderer.js"></script>
     <script src="main.js"></script>
 </body>
