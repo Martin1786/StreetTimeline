@@ -91,7 +91,23 @@ function initializeTimeline() {
     streetHeading.style.letterSpacing = '0.03em';
     timelineContainer.appendChild(streetHeading);
 
+    // Create a Materialize collapsible for this street's houses
+    const collapsible = document.createElement('ul');
+    collapsible.className = 'collapsible';
+    collapsible.style.marginBottom = '2rem';
+
     houses.forEach(({ house, residents }) => {
+      // Create collapsible item for each house
+      const li = document.createElement('li');
+      // Collapsible header (house label)
+      const header = document.createElement('div');
+      header.className = 'collapsible-header';
+      header.innerHTML = `<span style="font-weight:bold;">${house}</span><i class="material-icons right">expand_more</i>`;
+      li.appendChild(header);
+      // Collapsible body (timeline rows)
+      const body = document.createElement('div');
+      body.className = 'collapsible-body';
+      // Create a div to hold the timeline rows
       const houseSection = document.createElement('div');
       houseSection.classList.add('house-section');
       
@@ -212,8 +228,16 @@ function initializeTimeline() {
         houseSection.appendChild(row);
       });
 
-      timelineContainer.appendChild(houseSection);
+      body.appendChild(houseSection);
+      li.appendChild(body);
+      collapsible.appendChild(li);
     });
+
+    timelineContainer.appendChild(collapsible);
+    // Initialize Materialize collapsible
+    if (window.M && M.Collapsible) {
+      M.Collapsible.init(collapsible);
+    }
   });
 
   // Remove left padding and margin from timeline container and parent container
