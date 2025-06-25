@@ -110,7 +110,11 @@ function initializeTimeline() {
 
       const pos = calculatePosition(entry.startYear, entry.endYear);
       bar.style.left = `${pos.left}%`;
-      bar.style.width = `${pos.width}%`;
+      // Ensure a minimum width for visibility and tooltip interaction
+      const minWidthPx = 8;
+      const containerWidth = timelineContainer.offsetWidth || 800; // fallback if not rendered yet
+      const minWidthPercent = (minWidthPx / containerWidth) * 100;
+      bar.style.width = `${Math.max(pos.width, minWidthPercent)}%`;
       bar.style.backgroundColor = getColorForNotes(entry.notes);
 
       // Tooltip interactions
