@@ -306,3 +306,12 @@
 #residentModalOverlay.active {
     display: flex;
 }
+
+.street-block {
+    background: #f8f9fa;
+    padding: 20px 18px 18px 18px;
+    border-radius: 14px;
+    margin-bottom: 32px;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 2px 8px rgba(105,179,162,0.03);
+}

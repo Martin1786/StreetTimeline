@@ -78,6 +78,11 @@ function initializeTimeline() {
 
   // residenceData is now [{ street, houses: [{ house, residents }] }]
   residenceData.forEach(({ street, houses }, streetIdx) => {
+    // Create a container for the street label and its houses
+    const streetBlock = document.createElement('div');
+    streetBlock.className = 'street-block';
+    streetBlock.style.marginBottom = '32px';
+
     // Add street heading and faint line
     const streetHeading = document.createElement('div');
     streetHeading.textContent = street;
@@ -89,7 +94,7 @@ function initializeTimeline() {
     streetHeading.style.background = 'none';
     streetHeading.style.borderTop = streetIdx === 0 ? 'none' : '1px solid #e0e0e0';
     streetHeading.style.letterSpacing = '0.03em';
-    timelineContainer.appendChild(streetHeading);
+    streetBlock.appendChild(streetHeading);
 
     // Create a Materialize collapsible for this street's houses
     const collapsible = document.createElement('ul');
@@ -233,11 +238,13 @@ function initializeTimeline() {
       collapsible.appendChild(li);
     });
 
-    timelineContainer.appendChild(collapsible);
+    streetBlock.appendChild(collapsible);
     // Initialize Materialize collapsible with accordion mode (only one open at a time)
     if (window.M && M.Collapsible) {
       M.Collapsible.init(collapsible, { accordion: true });
     }
+    // Append the street block to the timeline container
+    timelineContainer.appendChild(streetBlock);
   });
 
   // Remove left padding and margin from timeline container and parent container
