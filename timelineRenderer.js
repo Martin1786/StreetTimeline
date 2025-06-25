@@ -157,12 +157,37 @@ function initializeTimeline() {
 
         // Tooltip interactions
         bar.addEventListener('mouseenter', () => {
-          console.log('Hovered:', entry.name);
           showTooltip(`<strong>${entry.name}</strong><br>${entry.startYear}–${entry.endYear}<br>${entry.notes || ''}`);
         });
-        bar.addEventListener('mouseleave', () => {
-          console.log('Mouse left:', entry.name);
-          hideTooltip();
+        bar.addEventListener('mouseleave', hideTooltip);
+
+        // Modal interaction on click
+        bar.addEventListener('click', (e) => {
+          e.stopPropagation();
+          // Find street and house for this resident
+          let streetName = '';
+          let houseName = house;
+          // Traverse up to find the street name (fallback to empty if not found)
+          let parent = houseSection.parentElement;
+          while (parent && !streetName) {
+            const heading = parent.querySelector('div[style*="font-weight: bold"][style*="font-size: 1.1em"]');
+            if (heading) streetName = heading.textContent;
+            parent = parent.parentElement;
+          }
+          // Compose modal content
+          const modalContent = `
+            <div style="font-size:1.2em;font-weight:bold;margin-bottom:0.5em;">${entry.name}</div>
+            <div><strong>Years:</strong> ${entry.startYear}–${entry.endYear}</div>
+            <div><strong>House:</strong> ${houseName || '<em>Unknown</em>'}</div>
+            <div><strong>Street:</strong> ${streetName || '<em>Unknown</em>'}</div>
+            <div><strong>Notes:</strong><br>${entry.notes || '<em>No notes</em>'}</div>
+          `;
+          const overlay = document.getElementById('residentModalOverlay');
+          const content = document.getElementById('residentModalContent');
+          if (content) content.innerHTML = modalContent;
+          if (overlay) {
+            overlay.classList.add('active');
+          }
         });
 
         const nameLabel = document.createElement('span');
@@ -200,3 +225,15 @@ function initializeTimeline() {
     }
   }
 }
+
+// Add modal close logic at the end of the file
+document.addEventListener('DOMContentLoaded', () => {
+  const overlay = document.getElementById('residentModalOverlay');
+  const closeBtn = document.getElementById('closeResidentModal');
+  if (overlay && closeBtn) {
+    closeBtn.addEventListener('click', () => overlay.classList.remove('active'));
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) overlay.classList.remove('active');
+    });
+  }
+});
