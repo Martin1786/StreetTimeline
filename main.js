@@ -32,6 +32,52 @@ document.addEventListener('DOMContentLoaded', () => {
       reader.readAsText(file);
     });
   }
+
+  // Add scroll-to-top FAB functionality
+  const fab = document.getElementById('scrollTopFab');
+  const btn = document.getElementById('scrollToTopBtn');
+  if (fab && btn) {
+    // Hide FAB initially
+    fab.style.display = 'none';
+    // Show FAB when scrolled down
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 200) {
+        fab.style.display = 'block';
+      } else {
+        fab.style.display = 'none';
+      }
+    });
+    // Scroll to top on click
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // Initialize Materialize SideNav
+  var sidenavElems = document.querySelectorAll('.sidenav');
+  if (window.M && M.Sidenav) {
+    M.Sidenav.init(sidenavElems, {});
+  }
+
+  // Initialize About Modal
+  var aboutModalElem = document.getElementById('aboutModal');
+  if (aboutModalElem && window.M && M.Modal) {
+    M.Modal.init(aboutModalElem);
+  }
+
+  // Select the About link in the SideNav (3rd link)
+  var aboutLink = document.querySelectorAll('#slide-out a')[2];
+  if (aboutLink && aboutModalElem && window.M && M.Modal) {
+    aboutLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      var instance = M.Modal.getInstance(aboutModalElem);
+      if (instance) instance.open();
+      // Also close the sidenav if open
+      var sidenavInstance = M.Sidenav.getInstance(document.getElementById('slide-out'));
+      if (sidenavInstance) sidenavInstance.close();
+    });
+  }
 });
 
 // 🔗 FETCH DATA FROM GOOGLE SHEETS

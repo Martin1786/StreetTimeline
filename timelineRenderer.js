@@ -234,9 +234,9 @@ function initializeTimeline() {
     });
 
     timelineContainer.appendChild(collapsible);
-    // Initialize Materialize collapsible
+    // Initialize Materialize collapsible with accordion mode (only one open at a time)
     if (window.M && M.Collapsible) {
-      M.Collapsible.init(collapsible);
+      M.Collapsible.init(collapsible, { accordion: true });
     }
   });
 

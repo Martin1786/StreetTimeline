@@ -11,27 +11,41 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
+    <!-- SideNav Structure -->
+    <ul id="slide-out" class="sidenav">
+      <li><div class="user-view light-green darken-1 white-text" style="padding: 24px 16px;">
+        <span style="font-size:1.3em;font-weight:bold;">🏠 Timeline Menu</span>
+      </div></li>
+      <li><a href="#" class="light-green-text text-darken-1"><i class="material-icons">home</i>Home</a></li>
+      <li><a href="#timelineContainer" class="light-green-text text-darken-1"><i class="material-icons">timeline</i>Timeline</a></li>
+      <li><a href="#" class="light-green-text text-darken-1"><i class="material-icons">info</i>About</a></li>
+      <li><a href="#" class="light-green-text text-darken-1"><i class="material-icons">help_outline</i>Help</a></li>
+    </ul>
     <div class="center-panel">
-        <div class="container">
-            <header>
-                <h3 class="center-align light-green-text text-darken-1">🏠 Buildings Timeline View</h3>
-                <h3></h3>
-                
-                
-                
-                <div class="file-input-section">
-                    <div class="file-input-wrapper">
-                        <input type="file" id="fileInput" accept=".csv" />
-                        
+        <div class="main-wrapper">
+            <div class="container">
+                <header>
+                    <!-- Hamburger menu button for SideNav -->
+                    <a href="#" data-target="slide-out" class="sidenav-trigger left light-green-text text-darken-1" style="margin-right: 12px; font-size: 2rem; display: inline-block; vertical-align: middle;"><i class="material-icons">menu</i></a>
+                    <h3 class="center-align light-green-text text-darken-1">🏠 Buildings Timeline View</h3>
+                    <h3></h3>
+                    
+                    
+                    
+                    <div class="file-input-section">
+                        <div class="file-input-wrapper">
+                            <input type="file" id="fileInput" accept=".csv" />
+                            
+                        </div>
+                        <div id="status"></div>
                     </div>
-                    <div id="status"></div>
-                </div>
+                    
+                    
+                    <div id="legend"></div>
+                </header>
                 
-                
-                <div id="legend"></div>
-            </header>
-            
-            <div id="timelineContainer"></div>
+                <div id="timelineContainer"></div>
+            </div>
         </div>
     </div>
 
@@ -43,6 +57,18 @@
       <div class="modal-content">
         <h5 id="residentModalTitle"></h5>
         <div id="residentModalContent"></div>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-light btn light-green darken-1 white-text">Close</a>
+      </div>
+    </div>
+
+    <!-- About Modal -->
+    <div id="aboutModal" class="modal">
+      <div class="modal-content">
+        <h5>About This Timeline App</h5>
+        <p>This app visualizes historical building and resident data in a timeline format. It is designed to be mobile-friendly and easy to use, with features like collapsible house sections, a scroll-to-top button, and a responsive menu. Data can be loaded from a spreadsheet or CSV file.</p>
+        <p>Created with ❤️ using Materialize CSS and JavaScript.</p>
       </div>
       <div class="modal-footer">
         <a href="#!" class="modal-close waves-effect waves-light btn light-green darken-1 white-text">Close</a>
