@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buildings Timeline Viewer</title>
 	<link rel="stylesheet" href="styles.css">
+    <!-- Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="center-panel">
         <div class="container">
             <header>
-                <h1>🏠 Buildings Timeline View</h1>
+                <h3 class="center-align">🏠 Buildings Timeline View</h3>
                 <h3></h3>
                 
                 
@@ -34,11 +36,14 @@
     
     <div id="tooltip"></div>
 
-    <!-- Resident Details Modal -->
-    <div id="residentModalOverlay" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); z-index:10000; justify-content:center; align-items:center;">
-      <div id="residentModal" style="background:#fff; border-radius:10px; max-width:480px; width:90vw; max-height:80vh; overflow-y:auto; box-shadow:0 8px 32px rgba(0,0,0,0.25); padding:2rem; position:relative;">
-        <button id="closeResidentModal" style="position:absolute; top:10px; right:16px; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#888;">&times;</button>
+    <!-- Resident Details Modal (Materialize) as direct child of body -->
+    <div id="residentModal" class="modal">
+      <div class="modal-content">
+        <h5 id="residentModalTitle"></h5>
         <div id="residentModalContent"></div>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
       </div>
     </div>
 
@@ -48,5 +53,7 @@
     <!-- <script src="csvParser.js"></script> --->
     <script src="timelineRenderer.js"></script>
     <script src="main.js"></script>
+    <!-- Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>

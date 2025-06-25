@@ -163,7 +163,9 @@ async function loadTimelineFromGoogleSheets() {
     maxYear = Math.ceil(maxYear / 10) * 10;
 
     console.log(`Timeline range: ${minYear} - ${maxYear}`);
-    updateStatus(`Timeline ready: ${residenceData.length} buildings, ${minYear}–${maxYear}`);
+    // Count total number of houses across all streets
+    const totalBuildings = residenceData.reduce((sum, streetGroup) => sum + streetGroup.houses.length, 0);
+    updateStatus(`Timeline ready: ${totalBuildings} buildings, ${minYear}–${maxYear}`);
 
     // Sort streets and houses by name for consistent display
     residenceData.sort((a, b) => a.street.localeCompare(b.street));

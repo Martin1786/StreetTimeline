@@ -32,9 +32,13 @@ function renderLegend() {
   legend.innerHTML = '';
 
   legendData.forEach(item => {
-    const entry = document.createElement('div');
-    entry.classList.add('legend-item');
-    entry.innerHTML = `<span class="legend-color" style="background-color: ${item.color}"></span>${item.label}`;
-    legend.appendChild(entry);
+    const chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.style.backgroundColor = '#f5f5f5';
+    chip.style.marginRight = '8px';
+    chip.style.display = 'inline-flex';
+    chip.style.alignItems = 'center';
+    chip.innerHTML = `<span style="display:inline-block;width:16px;height:16px;border-radius:3px;background:${item.color};margin-right:8px;border:1px solid #ccc;"></span>${item.label}`;
+    legend.appendChild(chip);
   });
 }
