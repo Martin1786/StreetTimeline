@@ -2,10 +2,10 @@
 function getColorForNotes(notes) {
   const text = (notes || '').toLowerCase();
 
-  if (text.includes('owner')) return '#69b3a2';           // sage green
-  if (text.includes('tenant')) return '#5B9BD5';          // blue
-  if (text.includes('widow') || text.includes('widower')) return '#FF6B6B'; // coral/salmon
-  if (text.includes('labourer') || text.includes('laborer')) return '#4ECDC4'; // teal
+  if (text.includes('owner')) return '#388e6c';           // darker sage green
+  if (text.includes('tenant')) return '#2366a8';          // darker blue
+  if (text.includes('widow') || text.includes('widower')) return '#c0392b'; // darker coral
+  if (text.includes('labourer') || text.includes('laborer')) return '#009688'; // darker teal
   if (
     text.includes('shopkeeper') ||
     text.includes('shop keeper') ||
@@ -14,18 +14,18 @@ function getColorForNotes(notes) {
     text.includes('ran a shop')
   ) return '#FFE66D'; // soft yellow
 
-  return '#69b3a2'; // fallback/default color (sage green)
+  return '#388e6c'; // fallback/default color (darker sage green)
 }
 
 // 🗂️ DISPLAY COLOR LEGEND AT TOP OF PAGE
 function renderLegend() {
   const legendData = [
-    { label: 'Owner', color: '#69b3a2' },
-    { label: 'Tenant', color: '#5B9BD5' },
-    { label: 'Widow/Widower', color: '#FF6B6B' },
-    { label: 'Labourer', color: '#4ECDC4' },
+    { label: 'Owner', color: '#388e6c' },
+    { label: 'Tenant', color: '#2366a8' },
+    { label: 'Widow/Widower', color: '#c0392b' },
+    { label: 'Labourer', color: '#009688' },
     { label: 'Shopkeeper / Grocer / Store', color: '#FFE66D' },
-    { label: 'Other / Default', color: '#69b3a2' }
+    { label: 'Other / Default', color: '#388e6c' }
   ];
 
   const legend = document.getElementById('legend');
