@@ -33,12 +33,11 @@ function renderLegend() {
 
   legendData.forEach(item => {
     const chip = document.createElement('div');
-    chip.className = 'chip';
-    chip.style.backgroundColor = '#f5f5f5';
+    chip.className = 'chip light-green darken-1 white-text';
     chip.style.marginRight = '8px';
     chip.style.display = 'inline-flex';
     chip.style.alignItems = 'center';
-    chip.innerHTML = `<span style="display:inline-block;width:16px;height:16px;border-radius:3px;background:${item.color};margin-right:8px;border:1px solid #ccc;"></span>${item.label}`;
+    chip.innerHTML = `<span style="display:inline-block;width:16px;height:16px;border-radius:3px;background:${item.color};margin-right:8px;border:1px solid #fff;"></span>${item.label}`;
     legend.appendChild(chip);
   });
 }
