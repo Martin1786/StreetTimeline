@@ -86,13 +86,8 @@ async function fetchPublicGoogleSheet() {
 // 🔄 CONVERT GOOGLE SHEETS DATA TO TIMELINE FORMAT
 function convertSheetsToTimelineData(sheetsData) {
   updateStatus('Processing Google Sheets data...');
-  
   // First row should be headers
   const [headers, ...rows] = sheetsData;
-  
-  console.log('Headers found:', headers);
-  console.log('Number of data rows:', rows.length);
-  
   // Convert rows to objects using headers
   const records = rows.map(row => {
     const record = {};
@@ -105,52 +100,31 @@ function convertSheetsToTimelineData(sheetsData) {
     return record.Name || record.name || record.House || record.house;
   });
 
-  console.log('Sample record:', records[0]);
-
-  // Group by house and process residents
-  const houseGroups = {};
-  
+  // Group by street, then by house
+  const streetGroups = {};
   records.forEach(row => {
-    // Flexible field mapping - adjust these based on your column names
+    const street = row.Street || row.street || 'Unknown Street';
     const house = row.House || row.house || row.Address || row.address || row.Building || row.building || 'Unknown';
     const name = row.Name || row.name || row.Resident || row.resident || 'Unknown Resident';
     const startYear = parseInt(row.StartYear || row['Start Year'] || row.start_year || row.From || row.from) || 0;
     const endYear = parseInt(row.EndYear || row['End Year'] || row.end_year || row.To || row.to) || 0;
     const notes = row.Notes || row.notes || row.Occupation || row.occupation || row.Type || row.type || '';
-
-    // Skip invalid records
-    if (startYear === 0 || endYear === 0 || startYear > endYear) {
-      console.warn('Skipping invalid record:', { name, startYear, endYear });
-      return;
-    }
-
-    const resident = {
-      name,
-      startYear,
-      endYear,
-      notes
-    };
-
-    if (!houseGroups[house]) {
-      houseGroups[house] = [];
-    }
-    houseGroups[house].push(resident);
+    if (startYear === 0 || endYear === 0 || startYear > endYear) return;
+    const resident = { name, startYear, endYear, notes };
+    if (!streetGroups[street]) streetGroups[street] = {};
+    if (!streetGroups[street][house]) streetGroups[street][house] = [];
+    streetGroups[street][house].push(resident);
   });
 
-  // Convert to timeline format with row offset calculation
-  const processedData = Object.entries(houseGroups).map(([house, residents]) => {
-    // Sort residents by start year
-    residents.sort((a, b) => a.startYear - b.startYear);
-    
-    // Calculate row offsets to guarantee each bar is on its own row
-    residents.forEach((resident, i) => {
-      resident.rowOffset = i;
+  // Convert to array format for rendering
+  const processedData = Object.entries(streetGroups).map(([street, housesObj]) => {
+    const houses = Object.entries(housesObj).map(([house, residents]) => {
+      residents.sort((a, b) => a.startYear - b.startYear);
+      residents.forEach((resident, i) => { resident.rowOffset = i; });
+      return { house, residents };
     });
-
-    return { house, residents };
+    return { street, houses };
   });
-
-  console.log('Processed residence data:', processedData);
   return processedData;
 }
 
@@ -176,10 +150,11 @@ async function loadTimelineFromGoogleSheets() {
       throw new Error('No valid residence data found');
     }
 
-    // Calculate global year range
-    const allYears = residenceData.flatMap(({ residents }) => 
-      residents.flatMap(r => [r.startYear, r.endYear])
-    );
+    // Calculate global year range for grouped-by-street structure
+    const allYears = residenceData
+      .flatMap(streetGroup => streetGroup.houses)
+      .flatMap(house => house.residents)
+      .flatMap(r => [r.startYear, r.endYear]);
     minYear = Math.min(...allYears);
     maxYear = Math.max(...allYears);
 
@@ -190,8 +165,11 @@ async function loadTimelineFromGoogleSheets() {
     console.log(`Timeline range: ${minYear} - ${maxYear}`);
     updateStatus(`Timeline ready: ${residenceData.length} buildings, ${minYear}–${maxYear}`);
 
-    // Sort houses by name for consistent display
-    residenceData.sort((a, b) => a.house.localeCompare(b.house));
+    // Sort streets and houses by name for consistent display
+    residenceData.sort((a, b) => a.street.localeCompare(b.street));
+    residenceData.forEach(streetGroup => {
+      streetGroup.houses.sort((a, b) => a.house.localeCompare(b.house));
+    });
 
     // Initialize and render the timeline
     initializeTimeline();
@@ -224,10 +202,11 @@ function parseCSV(csvText) {
       throw new Error('No valid data rows found');
     }
     
-    // Calculate global year range
-    const allYears = residenceData.flatMap(({ residents }) => 
-      residents.flatMap(r => [r.startYear, r.endYear])
-    );
+    // Calculate global year range for grouped-by-street structure
+    const allYears = residenceData
+      .flatMap(streetGroup => streetGroup.houses)
+      .flatMap(house => house.residents)
+      .flatMap(r => [r.startYear, r.endYear]);
     minYear = Math.min(...allYears);
     maxYear = Math.max(...allYears);
     
