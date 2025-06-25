@@ -86,13 +86,33 @@ function convertSheetsToTimelineData(sheetsData) {
   });
 
   // Convert to your existing timeline format
-  const residenceData = Array.from(residenceMap.entries()).map(([house, residents]) => ({
-    house,
-    residents: residents.map((resident, index) => ({
-      ...resident,
-      rowOffset: index
-    }))
-  }));
+  const residenceData = Array.from(residenceMap.entries()).map(([house, residents]) => {
+    // Sort residents by start year
+    residents.sort((a, b) => a.startYear - b.startYear);
+
+    // Calculate row offsets to prevent overlapping bars
+    const rows = [];
+    residents.forEach(resident => {
+      let rowOffset = 0;
+      // Find the first row where this resident doesn't overlap with existing ones
+      while (
+        rows[rowOffset] &&
+        rows[rowOffset].some(r =>
+          !(resident.endYear < r.startYear || resident.startYear > r.endYear)
+        )
+      ) {
+        rowOffset++;
+      }
+      // Initialize row if needed
+      if (!rows[rowOffset]) rows[rowOffset] = [];
+      // Add resident to this row
+      resident.rowOffset = rowOffset;
+      rows[rowOffset].push(resident);
+      console.log('House:', house, 'Resident:', resident.name, 'rowOffset:', resident.rowOffset);
+    });
+
+    return { house, residents };
+  });
 
   console.log('Processed residence data:', residenceData);
   return residenceData;

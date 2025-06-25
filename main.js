@@ -142,25 +142,9 @@ function convertSheetsToTimelineData(sheetsData) {
     // Sort residents by start year
     residents.sort((a, b) => a.startYear - b.startYear);
     
-    // Calculate row offsets to prevent overlapping bars
-    const rows = [];
-    residents.forEach(resident => {
-      let rowOffset = 0;
-      
-      // Find the first row where this resident doesn't overlap with existing ones
-      while (rows[rowOffset] && 
-             rows[rowOffset].some(r => 
-               !(resident.endYear < r.startYear || resident.startYear > r.endYear)
-             )) {
-        rowOffset++;
-      }
-      
-      // Initialize row if needed
-      if (!rows[rowOffset]) rows[rowOffset] = [];
-      
-      // Add resident to this row
-      resident.rowOffset = rowOffset;
-      rows[rowOffset].push(resident);
+    // Calculate row offsets to guarantee each bar is on its own row
+    residents.forEach((resident, i) => {
+      resident.rowOffset = i;
     });
 
     return { house, residents };
