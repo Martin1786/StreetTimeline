@@ -96,6 +96,18 @@ function initializeTimeline() {
     streetHeading.style.letterSpacing = '0.03em';
     streetBlock.appendChild(streetHeading);
 
+    // Insert a sticky year-scale bar above each street block
+    const streetYearScale = document.createElement('div');
+    streetYearScale.className = 'year-scale street-year-scale';
+    for (let y = minYear; y <= maxYear; y += 10) {
+      const tick = document.createElement('div');
+      tick.textContent = y;
+      tick.style.flex = "1";
+      streetYearScale.appendChild(tick);
+    }
+    streetYearScale.style.display = 'none'; // Hide by default
+    streetBlock.appendChild(streetYearScale);
+
     // Create a Materialize collapsible for this street's houses
     const collapsible = document.createElement('ul');
     collapsible.className = 'collapsible';
@@ -256,6 +268,30 @@ function initializeTimeline() {
       timelineContainer.parentElement.style.marginLeft = '0';
     }
   }
+
+  // After all street blocks are added, set up scroll event for floating year line
+  setTimeout(() => {
+    const timelineContainer = document.getElementById('timelineContainer');
+    const streetBlocks = Array.from(timelineContainer.getElementsByClassName('street-block'));
+    const yearScales = Array.from(timelineContainer.getElementsByClassName('street-year-scale'));
+    function updateFloatingYearLine() {
+      let found = false;
+      const offset = 60; // px, adjust if you have a header/legend
+      for (let i = 0; i < streetBlocks.length; i++) {
+        const rect = streetBlocks[i].getBoundingClientRect();
+        // Check if the top of the street block is at or above the offset from the top of the viewport, but not scrolled past the bottom
+        if (!found && rect.top <= offset && rect.bottom > offset + 40) {
+          yearScales[i].style.display = '';
+          found = true;
+        } else {
+          yearScales[i].style.display = 'none';
+        }
+      }
+    }
+    window.addEventListener('scroll', updateFloatingYearLine);
+    window.addEventListener('resize', updateFloatingYearLine);
+    updateFloatingYearLine();
+  }, 0);
 }
 
 // Add Materialize modal initialization at the end of the file

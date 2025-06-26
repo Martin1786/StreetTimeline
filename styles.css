@@ -155,6 +155,10 @@
             padding: 0 1rem;
             border-bottom: 2px solid #e9ecef;
             padding-bottom: 0.5rem;
+            position: sticky;
+            top: 0;
+            background: #f8f9fa;
+            z-index: 2;
         }
 
         .house-section {
