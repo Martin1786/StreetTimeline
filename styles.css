@@ -22,7 +22,7 @@
 
         .container {
             width: 100%;
-            padding: 10px 24px;
+            padding: 0;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
@@ -137,7 +137,7 @@
             background: white;
             border-radius: 12px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            padding: 2rem;
+            padding: 0 24px 0 0;
             position: relative;
             min-height: 400px;
             overflow-x: auto;
@@ -162,7 +162,8 @@
         }
 
         .house-section {
-            margin-bottom: 2rem;
+            margin-bottom: 0;
+            padding: 0;
             position: relative;
         }
 
@@ -332,9 +333,14 @@
 
 .street-block {
     background: #f8f9fa;
-    padding: 20px 18px 18px 18px;
-    border-radius: 14px;
-    margin-bottom: 32px;
+    padding: 4px 4px 4px 4px;
+    border-radius: 4px;
+    margin-bottom: 0px;
     border: 1px solid #e9ecef;
-    box-shadow: 0 2px 8px rgba(105,179,162,0.03);
+    box-shadow: none;
+    font-size: 0.85em;
+}
+
+.collapsible {
+    margin-bottom: 0;
 }

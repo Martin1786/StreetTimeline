@@ -111,7 +111,7 @@ function initializeTimeline() {
     // Create a Materialize collapsible for this street's houses
     const collapsible = document.createElement('ul');
     collapsible.className = 'collapsible';
-    collapsible.style.marginBottom = '2rem';
+    collapsible.style.marginBottom = '0';
 
     houses.forEach(({ house, residents }) => {
       // Create collapsible item for each house
@@ -127,15 +127,13 @@ function initializeTimeline() {
       // Create a div to hold the timeline rows
       const houseSection = document.createElement('div');
       houseSection.classList.add('house-section');
+      houseSection.style.marginBottom = '0';
+      houseSection.style.padding = '0';
       
       // Calculate the total height needed for this house section
       const maxRowOffset = Math.max(...residents.map(r => r.rowOffset));
       const totalHeight = (maxRowOffset + 1) * 18;
       houseSection.style.height = `${totalHeight + 10}px`; // Less extra space for the label
-      houseSection.style.marginBottom = '8px'; // Reduce space between houses
-      houseSection.style.position = 'relative'; // Make sure it's a positioning context
-      houseSection.style.marginLeft = '0';
-      houseSection.style.paddingLeft = '0';
 
       // Display house label - only create once per house
       const houseLabel = document.createElement('div');
