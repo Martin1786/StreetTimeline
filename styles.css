@@ -108,13 +108,13 @@
             display: flex;
             flex-wrap: wrap;
             gap: 1rem;
-            margin: .5rem 0;
+            margin: .5rem auto;
             padding: .5rem;
             background: #f8f9fa;
             border-radius: 8px;
             border: 1px solid #e9ecef;
             text-align: center;
-            width: 100%;
+            justify-content: center;
             max-width: 100%;
             align-self: center;
         }
