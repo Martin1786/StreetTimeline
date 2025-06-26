@@ -344,3 +344,7 @@
 .collapsible {
     margin-bottom: 0;
 }
+
+#legend input[type="color"] {
+    display: none !important;
+}

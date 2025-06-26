@@ -12,27 +12,6 @@ function renderYearScale(container) {
 
   container.appendChild(scale);
 }
-// 🗂️ DISPLAY COLOR LEGEND AT TOP OF PAGE
-function renderLegend() {
-  const legendData = [
-    { label: 'Owner', color: '#69b3a2' },
-    { label: 'Tenant', color: '#5B9BD5' },
-    { label: 'Widow/Widower', color: '#FF6B6B' },
-    { label: 'Labourer', color: '#4ECDC4' },
-    { label: 'Shopkeeper / Grocer / Store', color: '#FFE66D' },
-    { label: 'Other / Default', color: '#69b3a2' }
-  ];
-
-  const legend = document.getElementById('legend');
-  legend.innerHTML = '';
-
-  legendData.forEach(item => {
-    const entry = document.createElement('div');
-    entry.classList.add('legend-item');
-    entry.innerHTML = `<span class="legend-color" style="background-color: ${item.color}"></span>${item.label}`;
-    legend.appendChild(entry);
-  });
-}
 
 // 🌐 ADD VERTICAL DECADE LINES BEHIND THE BARS
 function renderGridLines(container) {
@@ -176,6 +155,7 @@ function initializeTimeline() {
 
         const bar = document.createElement('div');
         bar.classList.add('timeline-bar');
+        bar.setAttribute('data-notes', entry.notes || '');
 
         const pos = calculatePosition(entry.startYear, entry.endYear);
         bar.style.left = `${pos.left}%`;
